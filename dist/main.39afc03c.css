@@ -42,17 +42,17 @@ body {
   cursor: pointer;
 }
 
-.top-bar {
+.top-bar, .progress-area .timer, .controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.top-bar i {
+.top-bar i, .progress-area .timer i, .controls i {
   font-size: 30px;
   color: var(---lightblack);
 }
-.top-bar span {
-  font-size: 30px;
+.top-bar span, .progress-area .timer span, .controls span {
+  font-size: 1.8rem;
   color: var(---lightblack);
 }
 
@@ -60,6 +60,75 @@ body {
   height: 256px;
   width: 100%;
   box-shadow: 0px 6px 12px var(--lightshadow);
+  border-radius: 15px;
+  overflow: hidden;
+  border: none;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.img-area img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.song-details {
+  text-align: center;
+  margin: 10px 0;
+  margin-bottom: 15px;
+}
+.song-details .name {
+  font-size: 1.5rem;
+}
+.song-details .artist {
+  font-size: 1.2rem;
+}
+
+.progress-area {
+  height: 6px;
+  width: 100%;
+  background-color: var(--pink);
+  border-radius: 50px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.progress-area .progress-bar {
+  height: inherit;
+  width: 50%;
+  border-radius: inherit;
+  background-color: linear-gradient(90deg, var(--light-pink) 0%, var(--pink) 100%);
+}
+.progress-area .progress-bar::before {
+  content: "";
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  background: black;
+  border-radius: inherit;
+  top: 50%;
+  transform: translateY(-50%);
+  background: inherit;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.progress-area:hover .progress-bar::before {
+  opacity: 1;
+}
+.progress-area .timer {
+  margin-top: 2px;
+}
+
+.timer span {
+  font-size: 1.3rem;
+}
+
+.controls {
+  margin: 40px 0 5px 0;
+}
+.controls i {
+  font-size: 28px;
+  user-select: none;
+  background: linerar-gradient(var(--light-pink), 0%, var(--pink) 100%);
 }
 
 /*# sourceMappingURL=/main.39afc03c.css.map */
