@@ -117,79 +117,182 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"script.js":[function(require,module,exports) {
+var wrapper = document.querySelector('.wrapper');
+var musicImg = wrapper.querySelector('.img-area img');
+var musicName = wrapper.querySelector('.song-details .name');
+var musicArtist = wrapper.querySelector('.song-details');
+var playPauseBtn = wrapper.querySelector('play-pause');
+var prevBtn = wrapper.querySelector('#prev');
+var mainAudio = wrapper.querySelector('#next');
+var progressArea = wrapper.querySelector('.progress-area');
+var progressBar = progressArea.querySelector('.progress');
+var musicList = wrapper.querySelector('.music-list');
+var moreMusicBtn = wrapper.querySelector('#more-music');
+var closeMoreMusic = musicList.querySelector('#close'); /// Music Index
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
+var musicIndex = Math.floor(Math.random() * allMusic.length) + 1;
+isMusicPaused = true;
+window.addEventListener("laod", function () {
+  loadMusic(musicIndex);
+  playingSong();
+});
+
+function loadMusic(indexNumb) {
+  musicName.innerText = allMusic[indexNumb - 1].name;
+  musicArtist.innerText = allMusic[indexNumb - 1].artist;
+  musicImg.src = "/images/".concat(allMusic[indexNumb - 1].src, ".jpg}");
+  mainAudio.src = "/Music/".concat(allMusic[indexNumb - 1].src, ".mp3");
+} // Play musicName
+
+
+function playMusic() {
+  wrapper.classList.add('paused');
+  playPauseBtn.querySelector('i').innerText = 'pause';
+  mainAudio.play();
+} // Prev Music FUntion
+
+
+function prevMusic() {
+  musicIndex--;
+
+  if (musicIndex < 1) {
+    musicIndex = allMusic.length;
+  } else {
+    musicIndex = musicIndex;
   }
 
-  return bundleURL;
-}
+  loadMusic(musicIndex);
+  playMusic();
+  playingSong();
+} // next music Function
 
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
 
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
+function nextMusic() {
+  musicIndex++;
+
+  if (musicIndex > allMusic.length) {
+    musicIndex = 1;
+  } else {
+    musicIndex = musicIndex;
   }
 
-  return '/';
-}
+  laodMusic(musicIndex);
+  playMusic();
+  playingSong();
+} // pause/play event
 
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
 
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
+playPauseBtn.addEventListener('click', function () {
+  var isMusicPlay = wrapper.classList.contains("paused");
 
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
+  if (isMusicPlay == true) {
+    pauseMusic();
+  } else {
+    playMusic();
   }
 
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
+  playingSong();
+}); // Prev butto even
 
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
+prevBtn.addEventListener('click', function () {
+  prevMusic();
+});
+nextBtn.addEventListener('click', function () {
+  nextMusic();
+}); //progress bar
 
-    cssTimeout = null;
-  }, 50);
+mainAudio.addEventListener('timeupdate', function (e) {
+  var currentTime = e.target.currentTime;
+  var duration = e.target.duration;
+  var progressWidth = currentTime / duration * 100;
+  progressBar.style.width = "".concat(progressWidth, "%");
+});
+var musicCurrentTime = wrapper.querySelector('.curerent-time');
+musicDuration = wrapper.querySelector('.max-duration');
+mainAudio.addEventListener('loadeddata', function () {
+  var mainAdDuration = mainAudio.duration;
+  var totalMin = Math.floor(mainAdDuration / 60);
+  var totalSec = Math.floor(mainAdDuration % 60);
+
+  if (totalSec < 10) {
+    totalSec = "0".concat(totalSec);
+  }
+
+  musicDuration.innerText = "".concat(totalMin, ": ").concat(totalSec); //update playing song
+
+  var currentMin = Math.floor(currentTime / 60);
+  var currentSec = Math.floor(currentTime % 60);
+
+  if (currentSec < 10) {
+    currentSec = "0".concat(currentSec);
+  }
+
+  musicCurrentTime.innerText = "".concat(currentMin, ":").concat(currentSec);
+});
+progressArea.addEventListener('click', function (e) {
+  var progressWidth = progressArea.clientWidth;
+  var clickedOffsetX = e.offsetX;
+  var songDuration = mainAudio.duration;
+  mainAudio.currentTime = clickedOffsetX / progressWidth * songDuration;
+  playMusic();
+  playingSong();
+}); // loop shuffle
+
+var repeatBtn = wrapper.querySelector('#repeat-plist');
+repeatBtn.addEventListener('click', function (e) {
+  var getText = repeatBtn.innerText;
+
+  switch (getText) {
+    case 'repeat':
+      repeatBtn.innnerText = 'repeat_one';
+      repeatBtn.setAttribute('title', "Song Looped");
+      break;
+
+    case 'repeat_one':
+      repeatBtn.innerText = 'shuffle';
+      repeatBtn.setAttribute('title', 'playback shuffled');
+      break;
+
+    case 'shuffle':
+      repeatBtn.innnerText = 'repeat';
+      repeatBtn.setAttribute('title', "playlist looped");
+      break;
+  }
+}); ///Song End
+
+mainAudio.addEventListener('ended', function () {
+  var getText = repeatBtn.innerText;
+
+  switch (getText) {
+    case 'repeat':
+      nextMusic();
+      break;
+
+    case 'shuffle':
+      var randIndex = Math.floor(Math.random() * allMusic.length + 1);
+
+      do {
+        randIndex = Math.floor(Math.random() * allMusic.length + 1);
+      } while (musicIndex == randIndex);
+
+      musicIndex = randIndex;
+      loadMusic(musicIndex);
+      playMusic();
+      playingSong();
+      break;
+  }
+}); // show more music
+
+moreMusicBtn.addEventListener('click', function () {
+  moreMusicBtn.click();
+});
+var ulTag = wrapper.querySelector('ul');
+
+for (var i = 0; i < allMusic.length; i++) {
+  var liTag = "<li li-index=\"".concat(i + 1, "\"\n                    <div class=\"row\">\n                    <span> ").concat(allMusic[i].name, "</span>\n                    <p>\n                    ");
 }
-
-module.exports = reloadCSS;
-},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"main.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -393,5 +496,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/main.39afc03c.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","script.js"], null)
+//# sourceMappingURL=/script.75da7f30.js.map
