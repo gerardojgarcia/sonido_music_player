@@ -118,12 +118,34 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.allMusic = void 0;
 var allMusic = [{
   name: ' Anatolian Rock Vol. 1',
-  artist: 'Jordan Schor',
-  img: './images/tezcatlipoca.png',
-  src: ''
+  artist: 'Sonido Solar',
+  img: 'music-1',
+  src: 'music-1'
+}, {
+  name: ' Brazilian Bossa Nova',
+  artist: 'Sonido Solar',
+  img: 'adiosadiosamor_result',
+  src: 'music-2'
+}, {
+  name: ' Female Turkish Mix',
+  artist: 'Sonido Solar',
+  img: 'adiosadiosamor_result',
+  src: 'music-3'
+}, {
+  name: ' Japan Mix Vol. 1',
+  artist: 'Sonido Solar',
+  img: 'adiosadiosamor_result',
+  src: 'music-4'
 }];
+exports.allMusic = allMusic;
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -152,7 +174,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64476" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50132" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
