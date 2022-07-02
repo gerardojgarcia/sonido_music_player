@@ -132,17 +132,17 @@ var allMusic = [{
 }, {
   name: ' Brazilian Bossa Nova',
   artist: 'Sonido Solar',
-  img: 'music-1',
+  img: 'music-2',
   src: 'music-2'
 }, {
   name: ' Female Turkish Mix',
   artist: 'Sonido Solar',
-  img: 'music-1',
+  img: 'music-3',
   src: 'music-3'
 }, {
   name: ' Japan Mix Vol. 1',
   artist: 'Sonido Solar',
-  img: 'music-1',
+  img: 'music-4',
   src: 'music-4'
 }];
 exports.allMusic = allMusic;
@@ -439,7 +439,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65349" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35421" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
