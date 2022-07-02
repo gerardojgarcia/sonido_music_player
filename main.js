@@ -14,7 +14,7 @@ let allMusic = [
     {
         name: ' Brazilian Bossa Nova',
         artist: 'Sonido Solar',
-        img: 'adiosadiosamor_result',
+        img: 'music-1',
         src: 'music-2'
 
 
@@ -22,7 +22,7 @@ let allMusic = [
     {
         name: ' Female Turkish Mix',
         artist: 'Sonido Solar',
-        img: 'adiosadiosamor_result',
+        img: 'music-1',
         src: 'music-3'
 
 
@@ -30,7 +30,7 @@ let allMusic = [
     {
         name: ' Japan Mix Vol. 1',
         artist: 'Sonido Solar',
-        img: 'adiosadiosamor_result',
+        img: 'music-1',
         src: 'music-4'
 
 

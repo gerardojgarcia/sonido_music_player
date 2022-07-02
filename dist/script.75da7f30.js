@@ -132,17 +132,17 @@ var allMusic = [{
 }, {
   name: ' Brazilian Bossa Nova',
   artist: 'Sonido Solar',
-  img: 'adiosadiosamor_result',
+  img: 'music-1',
   src: 'music-2'
 }, {
   name: ' Female Turkish Mix',
   artist: 'Sonido Solar',
-  img: 'adiosadiosamor_result',
+  img: 'music-1',
   src: 'music-3'
 }, {
   name: ' Japan Mix Vol. 1',
   artist: 'Sonido Solar',
-  img: 'adiosadiosamor_result',
+  img: 'music-1',
   src: 'music-4'
 }];
 exports.allMusic = allMusic;
@@ -173,8 +173,9 @@ window.addEventListener("load", function () {
 function loadMusic(indexNumb) {
   musicName.innerText = _main.allMusic[indexNumb - 1].name;
   musicArtist.innerText = _main.allMusic[indexNumb - 1].artist;
-  musicImg.src = "images/".concat(_main.allMusic[indexNumb - 1].src, ".jpg");
+  musicImg.src = "./images/".concat(_main.allMusic[indexNumb - 1].img, ".jpg");
   mainAudio.src = "Music/".concat(_main.allMusic[indexNumb - 1].src, ".mp3");
+  console.log(musicImg.src);
 } //play music function
 
 
@@ -237,7 +238,7 @@ mainAudio.addEventListener("timeupdate", function (e) {
   var progressWidth = currentTime / duration * 100;
   progressBar.style.width = "".concat(progressWidth, "%");
   var musicCurrentTime = wrapper.querySelector(".current-time"),
-      musicDuartion = wrapper.querySelector(".max-duration");
+      musicDuration = wrapper.querySelector(".max-duration");
   mainAudio.addEventListener("loadeddata", function () {
     // update song total duration
     var mainAdDuration = mainAudio.duration;
@@ -249,7 +250,7 @@ mainAudio.addEventListener("timeupdate", function (e) {
       totalSec = "0".concat(totalSec);
     }
 
-    musicDuartion.innerText = "".concat(totalMin, ":").concat(totalSec);
+    musicDuration.innerText = "".concat(totalMin, ":").concat(totalSec);
   }); // update playing song current time
 
   var currentMin = Math.floor(currentTime / 60);
@@ -270,6 +271,7 @@ progressArea.addEventListener("click", function (e) {
 
   var songDuration = mainAudio.duration; //getting song total duration
 
+  console.log(songDuration);
   mainAudio.currentTime = clickedOffsetX / progressWidth * songDuration;
   playMusic(); //calling playMusic function
 
@@ -337,6 +339,7 @@ mainAudio.addEventListener("ended", function () {
 
 moreMusicBtn.addEventListener("click", function () {
   musicList.classList.toggle("show");
+  console.log('clicked');
 });
 closemoreMusic.addEventListener("click", function () {
   moreMusicBtn.click();
@@ -345,11 +348,11 @@ var ulTag = wrapper.querySelector("ul"); // let create li tags according to arra
 
 var _loop = function _loop(i) {
   //let's pass the song name, artist from the array
-  var liTag = "<li li-index=\"".concat(i + 1, "\">\n                <div class=\"row\">\n                  <span>").concat(_main.allMusic[i].name, "</span>\n                  <p>").concat(_main.allMusic[i].artist, "</p>\n                </div>\n                <span id=\"").concat(_main.allMusic[i].src, "\" class=\"audio-duration\">3:40</span>\n                <audio class=\"").concat(_main.allMusic[i].src, "\" src=\"Music/").concat(_main.allMusic[i].src, ".mp3\"></audio>\n              </li>");
+  var liTag = "<li li-index=\"".concat(i + 1, "\">\n                <div class=\"row\">\n                  <span>").concat(_main.allMusic[i].name, "</span>\n                  <p>").concat(_main.allMusic[i].artist, "</p>\n                </div>\n                <span id=\"").concat(_main.allMusic[i].src, "\" class=\"audio-duration\"></span>\n                <audio class=\"").concat(_main.allMusic[i].src, "\" src=\"Music/").concat(_main.allMusic[i].src, ".mp3\"></audio>\n              </li>");
   console.log(liTag);
   ulTag.insertAdjacentHTML("beforeend", liTag); //inserting the li inside ul tag
 
-  var liAudioDuartionTag = ulTag.querySelector("#".concat(_main.allMusic[i].src));
+  var liAudioDurationTag = ulTag.querySelector("#".concat(_main.allMusic[i].src));
   console.log(ulTag);
   var liAudioTag = ulTag.querySelector("#".concat(_main.allMusic[i].src));
   console.log(liAudioTag);
@@ -436,7 +439,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50132" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65349" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

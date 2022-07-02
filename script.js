@@ -19,6 +19,7 @@ closemoreMusic = musicList.querySelector("#close");
 
 let musicIndex = Math.floor((Math.random() * allMusic.length) + 1);
 
+
 window.addEventListener("load", ()=>{
   loadMusic(musicIndex);
   playingSong(); 
@@ -27,8 +28,9 @@ window.addEventListener("load", ()=>{
 function loadMusic(indexNumb){
   musicName.innerText = allMusic[indexNumb - 1].name;
   musicArtist.innerText = allMusic[indexNumb - 1].artist;
-  musicImg.src = `images/${allMusic[indexNumb - 1].src}.jpg`;
+  musicImg.src = `./images/${allMusic[indexNumb - 1].img}.jpg`;
   mainAudio.src = `Music/${allMusic[indexNumb - 1].src}.mp3`;
+  console.log(musicImg.src)
 }
 
 //play music function
@@ -91,7 +93,7 @@ mainAudio.addEventListener("timeupdate", (e)=>{
   progressBar.style.width = `${progressWidth}%`;
 
   let musicCurrentTime = wrapper.querySelector(".current-time"),
-  musicDuartion = wrapper.querySelector(".max-duration");
+  musicDuration = wrapper.querySelector(".max-duration");
   mainAudio.addEventListener("loadeddata", ()=>{
     // update song total duration
     let mainAdDuration = mainAudio.duration;
@@ -100,7 +102,7 @@ mainAudio.addEventListener("timeupdate", (e)=>{
     if(totalSec < 10){ //if sec is less than 10 then add 0 before it
       totalSec = `0${totalSec}`;
     }
-    musicDuartion.innerText = `${totalMin}:${totalSec}`;
+    musicDuration.innerText = `${totalMin}:${totalSec}`;
   });
   // update playing song current time
   let currentMin = Math.floor(currentTime / 60);
@@ -117,6 +119,7 @@ progressArea.addEventListener("click", (e)=>{
   let clickedOffsetX = e.offsetX; //getting offset x value
   let songDuration = mainAudio.duration; //getting song total duration
   
+  console.log(songDuration)
   mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
   playMusic(); //calling playMusic function
   playingSong();
@@ -172,6 +175,7 @@ mainAudio.addEventListener("ended", ()=>{
 //show music list onclick of music icon
 moreMusicBtn.addEventListener("click", ()=>{
   musicList.classList.toggle("show");
+  console.log('clicked')
 });
 closemoreMusic.addEventListener("click", ()=>{
   moreMusicBtn.click();
@@ -186,14 +190,14 @@ for (let i = 0; i < allMusic.length; i++) {
                   <span>${allMusic[i].name}</span>
                   <p>${allMusic[i].artist}</p>
                 </div>
-                <span id="${allMusic[i].src}" class="audio-duration">3:40</span>
+                <span id="${allMusic[i].src}" class="audio-duration"></span>
                 <audio class="${allMusic[i].src}" src="Music/${allMusic[i].src}.mp3"></audio>
               </li>`;
 
      console.log(liTag)         
   ulTag.insertAdjacentHTML("beforeend", liTag); //inserting the li inside ul tag
 
-  let liAudioDuartionTag = ulTag.querySelector(`#${allMusic[i].src}`);
+  let liAudioDurationTag = ulTag.querySelector(`#${allMusic[i].src}`);
   console.log(ulTag)
   let liAudioTag = ulTag.querySelector(`#${allMusic[i].src}`);
   console.log(liAudioTag)
@@ -242,12 +246,13 @@ function playingSong(){
 }
 
 //particular li clicked function
-function clicked(element){
+function clicked(element) {
   let getLiIndex = element.getAttribute("li-index");
   musicIndex = getLiIndex; //updating current song index with clicked li index
   loadMusic(musicIndex);
   playMusic();
   playingSong();
+
 }
 
 

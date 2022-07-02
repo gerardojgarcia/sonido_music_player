@@ -172,11 +172,6 @@ body {
   opacity: 0;
   transition: all 150ms ease-out;
 }
-.music-list .show {
-  bottom: 0;
-  opacity: 1;
-  pointer-events: auto;
-}
 .music-list .row, .music-list .header {
   display: flex;
   align-items: center;
@@ -224,6 +219,12 @@ body {
 }
 .music-list ul li .audio-duration {
   font-size: 1rem;
+}
+
+.show {
+  bottom: 0;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /*# sourceMappingURL=/main.39afc03c.css.map */
