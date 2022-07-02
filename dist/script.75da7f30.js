@@ -339,7 +339,6 @@ mainAudio.addEventListener("ended", function () {
 
 moreMusicBtn.addEventListener("click", function () {
   musicList.classList.toggle("show");
-  console.log('clicked');
 });
 closemoreMusic.addEventListener("click", function () {
   moreMusicBtn.click();
@@ -348,14 +347,11 @@ var ulTag = wrapper.querySelector("ul"); // let create li tags according to arra
 
 var _loop = function _loop(i) {
   //let's pass the song name, artist from the array
-  var liTag = "<li li-index=\"".concat(i + 1, "\">\n                <div class=\"row\">\n                  <span>").concat(_main.allMusic[i].name, "</span>\n                  <p>").concat(_main.allMusic[i].artist, "</p>\n                </div>\n                <span id=\"").concat(_main.allMusic[i].src, "\" class=\"audio-duration\"></span>\n                <audio class=\"").concat(_main.allMusic[i].src, "\" src=\"Music/").concat(_main.allMusic[i].src, ".mp3\"></audio>\n              </li>");
-  console.log(liTag);
+  var liTag = "<li li-index=\"".concat(i + 1, "\">\n                <div class=\"row\">\n                  <span>").concat(_main.allMusic[i].name, "</span>\n                  <p>").concat(_main.allMusic[i].artist, "</p>\n                </div>\n                <audio class=\"").concat(_main.allMusic[i].src, "\" src=\"Music/").concat(_main.allMusic[i].src, ".mp3\"></audio>\n                <span id=\"").concat(_main.allMusic[i].src, "\" class=\"audio-duration\"></span>\n                \n              </li>");
   ulTag.insertAdjacentHTML("beforeend", liTag); //inserting the li inside ul tag
 
   var liAudioDurationTag = ulTag.querySelector("#".concat(_main.allMusic[i].src));
-  console.log(ulTag);
-  var liAudioTag = ulTag.querySelector("#".concat(_main.allMusic[i].src));
-  console.log(liAudioTag);
+  var liAudioTag = ulTag.querySelector(".".concat(_main.allMusic[i].src));
   liAudioTag.addEventListener("loadeddata", function () {
     var duration = liAudioTag.duration;
     var totalMin = Math.floor(duration / 60);
@@ -370,8 +366,6 @@ var _loop = function _loop(i) {
     liAudioDurationTag.innerText = "".concat(totalMin, ":").concat(totalSec); //passing total duation of song
 
     liAudioDurationTag.setAttribute("t-duration", "".concat(totalMin, ":").concat(totalSec)); //adding t-duration attribute with total duration value
-
-    console.log(liAudioDurationTag);
   });
 };
 
@@ -400,6 +394,8 @@ function playingSong() {
 
     allLiTag[j].setAttribute("onclick", "clicked(this)");
   }
+
+  console.log(allLiTag);
 } //particular li clicked function
 
 
@@ -410,6 +406,7 @@ function clicked(element) {
   loadMusic(musicIndex);
   playMusic();
   playingSong();
+  console.log(clicked());
 }
 },{"./main.js":"main.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

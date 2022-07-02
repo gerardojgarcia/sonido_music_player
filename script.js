@@ -175,7 +175,7 @@ mainAudio.addEventListener("ended", ()=>{
 //show music list onclick of music icon
 moreMusicBtn.addEventListener("click", ()=>{
   musicList.classList.toggle("show");
-  console.log('clicked')
+ 
 });
 closemoreMusic.addEventListener("click", ()=>{
   moreMusicBtn.click();
@@ -190,17 +190,18 @@ for (let i = 0; i < allMusic.length; i++) {
                   <span>${allMusic[i].name}</span>
                   <p>${allMusic[i].artist}</p>
                 </div>
-                <span id="${allMusic[i].src}" class="audio-duration"></span>
                 <audio class="${allMusic[i].src}" src="Music/${allMusic[i].src}.mp3"></audio>
+                <span id="${allMusic[i].src}" class="audio-duration"></span>
+                
               </li>`;
 
-     console.log(liTag)         
+          
   ulTag.insertAdjacentHTML("beforeend", liTag); //inserting the li inside ul tag
 
   let liAudioDurationTag = ulTag.querySelector(`#${allMusic[i].src}`);
-  console.log(ulTag)
-  let liAudioTag = ulTag.querySelector(`#${allMusic[i].src}`);
-  console.log(liAudioTag)
+  
+  let liAudioTag = ulTag.querySelector(`.${allMusic[i].src}`);
+  
 
   liAudioTag.addEventListener("loadeddata", ()=>{
     let duration = liAudioTag.duration;
@@ -214,7 +215,7 @@ for (let i = 0; i < allMusic.length; i++) {
     liAudioDurationTag.innerText = `${totalMin}:${totalSec}`; //passing total duation of song
     liAudioDurationTag.setAttribute("t-duration", `${totalMin}:${totalSec}`); //adding t-duration attribute with total duration value
 
-    console.log(liAudioDurationTag)
+    
 
   });
   
@@ -223,6 +224,7 @@ for (let i = 0; i < allMusic.length; i++) {
 //play particular song from the list onclick of li tag
 function playingSong(){
   const allLiTag = ulTag.querySelectorAll("li");
+
   
   for (let j = 0; j < allLiTag.length; j++) {
     let audioTag = allLiTag[j].querySelector(".audio-duration");
@@ -242,7 +244,7 @@ function playingSong(){
     allLiTag[j].setAttribute("onclick", "clicked(this)");
   }
 
-  
+  console.log(allLiTag) 
 }
 
 //particular li clicked function
@@ -252,7 +254,7 @@ function clicked(element) {
   loadMusic(musicIndex);
   playMusic();
   playingSong();
-
+  console.log(clicked())
+  
 }
-
 
